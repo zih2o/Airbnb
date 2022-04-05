@@ -1,3 +1,9 @@
+# git
+*.git
+
+# config folder
+airbnb_docker_2/config/
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
