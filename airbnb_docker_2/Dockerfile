@@ -13,3 +13,6 @@ RUN apk update \
     && apk del build-dependencies
 
 RUN pip install -r requirements.txt
+
+RUN pipenv install flake --dev \
+    && pipenv install black --dev --pre
