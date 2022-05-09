@@ -1,8 +1,9 @@
 # git
 *.git
 
-# config folder
+# config folder & uploads
 airbnb_docker_2/config/
+airbnb_docker_2/uploads/
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
