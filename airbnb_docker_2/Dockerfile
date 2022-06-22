@@ -14,5 +14,6 @@ RUN apk update \
 
 RUN pip install -r requirements.txt
 
-RUN pipenv install flake --dev \
-    && pipenv install black --dev --pre
+# RUN pip install pipenv \
+#     && pipenv install flake --dev \
+#     && pipenv install black --dev --pre
