@@ -1,0 +1,23 @@
+[tool.poetry]
+name = "airbnb-poetry"
+version = "0.1.0"
+description = ""
+authors = ["zih2o <pj2sharon55@gmail.com>"]
+license = "MIT"
+readme = "README.md"
+packages = [{include = "airbnb_poetry"}]
+
+[tool.poetry.dependencies]
+python = "^3.9"
+django = "^4.1.2"
+black = "^22.10.0"
+pillow = "^9.2.0"
+djangorestframework = "^3.14.0"
+
+
+[tool.poetry.group.dev.dependencies]
+black = {version = "^22.10.0", allow-prereleases = true}
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
