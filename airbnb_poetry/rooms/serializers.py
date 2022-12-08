@@ -4,7 +4,7 @@ from rest_framework.serializers import ModelSerializer, SerializerMethodField
 from .models import Amenity, Room
 from wishlists.models import Wishlist
 from medias.serializers import PhotoSerializer
-from users.serializer import TinyUserSerializer
+from users.serializers import TinyUserSerializer
 from categories.serializers import CategorySerializer
 from bookings.models import Booking
 

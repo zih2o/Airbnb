@@ -11,7 +11,7 @@ from rest_framework.status import HTTP_204_NO_CONTENT
 from django.db import transaction
 
 from categories.models import Category
-from .serializer import (
+from .serializers import (
     AmenitySerializer,
     RoomListSerializer,
     RoomDetailSerializer,
@@ -19,7 +19,7 @@ from .serializer import (
     CreateBookingSerializer,
 )
 from .models import Amenity, Room
-from reviews.serializer import ReviewSerializer
+from reviews.serializers import ReviewSerializer
 from medias.serializers import PhotoSerializer
 from bookings.models import Booking
 
