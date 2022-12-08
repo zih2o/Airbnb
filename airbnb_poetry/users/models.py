@@ -22,7 +22,7 @@ class User(AbstractUser):
     last_name = models.CharField(max_length=150, editable=False)
     name = models.CharField(max_length=150, default="")
     is_host = models.BooleanField(default=False)
-    avatar = models.ImageField(blank=True)
+    avatar = models.URLField(blank=True)
     gender = models.CharField(
         max_length=10,
         choices=GenderChoices.choices,

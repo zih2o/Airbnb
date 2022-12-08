@@ -13,10 +13,12 @@ django = "^4.1.2"
 black = "^22.10.0"
 pillow = "^9.2.0"
 djangorestframework = "^3.14.0"
+flake8 = "^6.0.0"
 
 
 [tool.poetry.group.dev.dependencies]
 black = {version = "^22.10.0", allow-prereleases = true}
+flake8 = "^6.0.0"
 
 [build-system]
 requires = ["poetry-core"]
