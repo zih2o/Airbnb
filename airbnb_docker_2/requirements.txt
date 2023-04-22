@@ -1,5 +1,0 @@
-Django==3.1.5
-django-countries
-django-seed
-psycopg2-binary
-# Pillow
