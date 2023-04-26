@@ -1,7 +1,8 @@
 from django.utils import timezone
+from rest_framework import serializers
 from rest_framework.serializers import ModelSerializer
 from .models import Perk, Experience
-from . import serializers
+
 from users.serializers import TinyUserSerializer
 from bookings.models import Booking
 
