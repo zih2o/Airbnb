@@ -1,13 +1,18 @@
 import strawberry
-
-name: str = "jisu"
+from rooms import schema as room_schema
 
 
 @strawberry.type
-class Query:
-    @strawberry.field
-    def ping(self) -> str:
-        return "pong"
+class Query(room_schema.Query):
+    pass
 
 
-schema = strawberry.Schema(query=Query)
+@strawberry.type
+class Mutation:
+    pass
+
+
+schema = strawberry.Schema(
+    query=Query,
+    #    mutation=Mutation,
+)

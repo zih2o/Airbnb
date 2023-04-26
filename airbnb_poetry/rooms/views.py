@@ -1,4 +1,5 @@
 from django.utils import timezone
+from django.db import transaction
 from rest_framework.views import APIView
 from rest_framework.permissions import IsAuthenticatedOrReadOnly
 from rest_framework.response import Response
@@ -8,7 +9,6 @@ from rest_framework.exceptions import (
     PermissionDenied,
 )
 from rest_framework.status import HTTP_204_NO_CONTENT
-from django.db import transaction
 
 from categories.models import Category
 from .serializers import (
@@ -76,7 +76,6 @@ class AmenityDetail(APIView):
 
 
 class Rooms(APIView):
-
     permission_classes = [IsAuthenticatedOrReadOnly]
 
     def get(self, request):
@@ -89,7 +88,6 @@ class Rooms(APIView):
         return Response(serializer.data)
 
     def post(self, request):
-
         serializer = RoomDetailSerializer(data=request.data)
         if serializer.is_valid():
             category_pk = request.data.get("category")
@@ -121,7 +119,6 @@ class Rooms(APIView):
 
 
 class RoomDetail(APIView):
-
     permission_classes = [IsAuthenticatedOrReadOnly]
 
     def get_object(self, pk):
@@ -131,7 +128,6 @@ class RoomDetail(APIView):
             raise NotFound
 
     def get(self, request, pk):
-
         room = self.get_object(pk)
         serializer = RoomDetailSerializer(
             room,
@@ -186,7 +182,6 @@ class RoomDetail(APIView):
 
 
 class RoomReviews(APIView):
-
     permission_classes = [IsAuthenticatedOrReadOnly]
 
     def get_object(self, pk):
@@ -213,7 +208,6 @@ class RoomReviews(APIView):
         return Response(serializer.data)
 
     def post(self, request, pk):
-
         serializer = ReviewSerializer(data=request.data)
         if serializer.is_valid():
             review = serializer.save(
@@ -243,14 +237,13 @@ class RoomAmenities(APIView):
         start = page_size * (page - 1)
         end = start + page_size
         serializer = AmenitySerializer(
-            room.reviews.all()[start:end],
+            room.amenities.all()[start:end],
             many=True,
         )
         return Response(serializer.data)
 
 
 class RoomPhotos(APIView):
-
     permission_classes = [IsAuthenticatedOrReadOnly]
 
     def get_object(self, pk):
@@ -260,7 +253,6 @@ class RoomPhotos(APIView):
             raise NotFound
 
     def post(self, request, pk):
-
         room = self.get_object(pk)
         if request.user != room.owner:
             raise PermissionDenied
@@ -273,7 +265,6 @@ class RoomPhotos(APIView):
 
 
 class RoomBookings(APIView):
-
     permission_classes = [IsAuthenticatedOrReadOnly]
 
     def get_object(self, pk):
