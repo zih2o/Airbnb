@@ -1,3 +1,4 @@
+from django.conf import settings
 import strawberry
 from strawberry import auto
 import typing
@@ -12,4 +13,14 @@ class RoomType:
     name: auto
     kind: auto
     owner: "UserType"
-    reviews: typing.List["ReviewType"]
+
+    @strawberry.field
+    def reviews(self, page: int) -> typing.List[ReviewType]:
+        page_size = settings.PAGE_SIZE
+        start = page + 1
+        end = start + page_size
+        return self.reviews.all()[start:end]
+
+    @strawberry.field
+    def rating(self) -> str:
+        return self.rating()
