@@ -9,15 +9,36 @@ from reviews.types import ReviewType
 from wishlists.models import Wishlist
 
 
+@strawberry.django.type(models.Amenity)
+class AmenityType:
+    id: auto
+    name: auto
+    description: auto
+
+
 @strawberry.django.type(models.Room)
 class RoomType:
     id: auto
     name: auto
     kind: auto
+    country: auto
+    city: auto
+    price: auto
+    rooms: auto
+    toilets: auto
+    description: auto
+    address: auto
+    pets_friendly: auto
+    kind: auto
+    category: auto
+    amenities: typing.List["AmenityType"]
     owner: "UserType"
 
     @strawberry.field
-    def reviews(self, page: typing.Optional[int] = 1) -> typing.List[ReviewType]:
+    def reviews(
+        self,
+        page: typing.Optional[int] = 1,
+    ) -> typing.List[ReviewType]:
         page_size = settings.PAGE_SIZE
         start = page + 1
         end = start + page_size
