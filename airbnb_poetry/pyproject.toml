@@ -16,6 +16,7 @@ djangorestframework = "^3.14.0"
 flake8 = "^6.0.0"
 strawberry-graphql = {extras = ["debug-server"], version = "^0.171.3"}
 strawberry-graphql-django = "^0.9.4"
+pyjwt = "^2.7.0"
 
 
 [tool.poetry.group.dev.dependencies]
