@@ -14,7 +14,6 @@ class PhotoDetail(APIView):
             raise NotFound
 
     def delete(self, request, pk):
-
         permission_classes = [IsAuthenticated]
 
         photo = self.get_object(pk)
