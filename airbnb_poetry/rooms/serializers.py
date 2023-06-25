@@ -31,7 +31,6 @@ class RoomListSerializer(ModelSerializer):
         model = Room
         fields = (
             "name",
-            "pk",
             "country",
             "city",
             "price",
@@ -39,7 +38,6 @@ class RoomListSerializer(ModelSerializer):
             "is_owner",
             "photos",
             "is_liked",
-            "owner",
         )
 
     def get_rating(self, room):
@@ -58,7 +56,7 @@ class RoomListSerializer(ModelSerializer):
 
 
 class RoomDetailSerializer(ModelSerializer):
-    owner = TinyUserSerializer(read_only=True)
+    user = TinyUserSerializer(read_only=True)
     amenities = AmenitySerializer(
         read_only=True,
         many=True,
@@ -85,12 +83,10 @@ class RoomDetailSerializer(ModelSerializer):
 
     def get_is_liked(self, room):
         request = self.context["request"]
-        if request.user.is_authenticated:
-            return Wishlist.objects.filter(
-                user=request.user,
-                rooms__pk=room.pk,
-            ).exists()
-        return []
+        return Wishlist.objects.filter(
+            user=request.user,
+            rooms__pk=room.pk,
+        ).exists()
 
 
 class PublicBookingSerializer(ModelSerializer):

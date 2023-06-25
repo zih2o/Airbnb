@@ -20,10 +20,15 @@ class User(AbstractUser):
     name = models.CharField(max_length=150, default="")
     is_host = models.BooleanField(default=False)
     avatar = models.URLField(blank=True)
-    gender = models.CharField(max_length=10, choices=GenderChoices.choices, null=True)
+    gender = models.CharField(
+        max_length=10,
+        choices=GenderChoices.choices,
+    )
     language = models.CharField(
-        max_length=2, choices=LanguageChoices.choices, null=True
+        max_length=2,
+        choices=LanguageChoices.choices,
     )
     currency = models.CharField(
-        max_length=5, choices=CurrencyChoices.choices, null=True
+        max_length=5,
+        choices=CurrencyChoices.choices,
     )
