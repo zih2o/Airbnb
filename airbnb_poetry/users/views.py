@@ -30,18 +30,34 @@ class Me(APIView):
 
 class Users(APIView):
     def post(self, request):
+        # try:
+        username = request.data.get("username")
+        email = request.data.get("email")
         password = request.data.get("password")
-        if not password:
-            raise ParseError("비밀번호는 필수 입력값입니다.")
+        if User.objects.filter(username=username).exists():
+            return Response(
+                {"error": "This username already exists."},
+                status=status.HTTP_400_BAD_REQUEST,
+            )
+        if User.objects.filter(email=email).exists():
+            return Response(
+                {"error": "This email already exists."},
+                status=status.HTTP_400_BAD_REQUEST,
+            )
+
         serializer = serializers.PrivateUserSerializer(data=request.data)
         if serializer.is_valid():
             user = serializer.save()
             user.set_password(password)
             user.save()
+            login(request, user)
             serializer = serializers.PrivateUserSerializer(user)
             return Response(serializer.data)
         else:
-            return Response(serializer.errors)
+            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+    # except Exception:
+    #     return Response({"error": "failed"}, status=status.HTTP_400_BAD_REQUEST)
 
 
 class PublicUser(APIView):
@@ -82,7 +98,10 @@ class LogIn(APIView):
             login(request, user)
             return Response({"ok": "login"})
         else:
-            return Response({"error": "username or password is not correct"})
+            return Response(
+                {"error": "username or password is not correct"},
+                status=status.HTTP_401_UNAUTHORIZED,
+            )
 
 
 class LogOut(APIView):
@@ -98,9 +117,7 @@ class GithubLogIn(APIView):
         try:
             code = request.data.get("code")
             access_token = requests.post(
-                f"https://github.com/login/oauth/access_token?code={code}& \
-                    client_id=024636271dcbf00c1fde& \
-                client_secret={settings.GH_SECRET}",
+                f"https://github.com/login/oauth/access_token?code={code}&client_id=024636271dcbf00c1fde&client_secret={settings.GH_SECRET}",
                 headers={"Accept": "application/json"},
             )
             access_token = access_token.json().get("access_token")
