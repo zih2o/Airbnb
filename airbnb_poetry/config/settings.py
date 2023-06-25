@@ -11,16 +11,10 @@ https://docs.djangoproject.com/en/4.1/ref/settings/
 """
 
 from pathlib import Path
-import os
-import environ
-
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-env = environ.Env(DEBUG=(bool, False))
-
-environ.Env.read_env(os.path.join(BASE_DIR, ".env"))
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/4.1/howto/deployment/checklist/
@@ -163,13 +157,5 @@ PAGE_SIZE = 3
 # Cors
 
 CORS_ALLOWED_ORIGINS = [
-    "http://127.0.0.1:3000",
+    "http://localhost:3000",
 ]
-
-CORS_ALLOW_CREDENTIALS = True
-
-CSRF_TRUSTED_ORIGINS = [
-    "http://127.0.0.1:3000",
-]
-
-GH_SECRET = env("GH_SECRET")
