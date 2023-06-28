@@ -106,7 +106,7 @@ DATABASES = {
         "NAME": "Airbnb",
         "USER": "postgres",
         "PASSWORD": env("POSTGRES_PASSWORD"),
-        "HOST": "127.0.0.1",
+        "HOST": env("HOST"),
         "PORT": "5432",
     }
 }
@@ -167,13 +167,13 @@ PAGE_SIZE = 3
 # Cors
 
 CORS_ALLOWED_ORIGINS = [
-    "http://127.0.0.1:3000",
+    env("FRONTEND_HOST"),
 ]
 
 CORS_ALLOW_CREDENTIALS = True
 
 CSRF_TRUSTED_ORIGINS = [
-    "http://127.0.0.1:3000",
+    env("FRONTEND_HOST"),
 ]
 
 GH_SECRET = env("GH_SECRET")

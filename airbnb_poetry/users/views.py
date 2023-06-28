@@ -6,8 +6,19 @@ from rest_framework import status
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.exceptions import ParseError, NotFound
 import requests
+from pathlib import Path
+import os
+import environ
 from . import serializers
 from .models import User
+
+BASE_DIR = Path(__file__).resolve().parent.parent
+
+env = environ.Env(DEBUG=(bool, False))
+
+environ.Env.read_env(os.path.join(BASE_DIR, ".env"))
+
+FRONTEND_HOST = env("FRONTEND_HOST")
 
 
 class Me(APIView):
@@ -30,34 +41,36 @@ class Me(APIView):
 
 class Users(APIView):
     def post(self, request):
-        # try:
-        username = request.data.get("username")
-        email = request.data.get("email")
-        password = request.data.get("password")
-        if User.objects.filter(username=username).exists():
-            return Response(
-                {"error": "This username already exists."},
-                status=status.HTTP_400_BAD_REQUEST,
-            )
-        if User.objects.filter(email=email).exists():
-            return Response(
-                {"error": "This email already exists."},
-                status=status.HTTP_400_BAD_REQUEST,
-            )
+        try:
+            username = request.data.get("username")
+            email = request.data.get("email")
+            password = request.data.get("password")
+            if not password:
+                raise ParseError("password는 필수 입력값입니다.")
+            if User.objects.filter(username=username).exists():
+                return Response(
+                    {"error": "This username already exists."},
+                    status=status.HTTP_400_BAD_REQUEST,
+                )
+            if User.objects.filter(email=email).exists():
+                return Response(
+                    {"error": "This email already exists."},
+                    status=status.HTTP_400_BAD_REQUEST,
+                )
 
-        serializer = serializers.PrivateUserSerializer(data=request.data)
-        if serializer.is_valid():
-            user = serializer.save()
-            user.set_password(password)
-            user.save()
-            login(request, user)
-            serializer = serializers.PrivateUserSerializer(user)
-            return Response(serializer.data)
-        else:
-            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+            serializer = serializers.PrivateUserSerializer(data=request.data)
+            if serializer.is_valid():
+                user = serializer.save()
+                user.set_password(password)
+                user.save()
+                login(request, user)
+                serializer = serializers.PrivateUserSerializer(user)
+                return Response(serializer.data)
+            else:
+                return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
-    # except Exception:
-    #     return Response({"error": "failed"}, status=status.HTTP_400_BAD_REQUEST)
+        except Exception:
+            return Response({"error": "failed"}, status=status.HTTP_400_BAD_REQUEST)
 
 
 class PublicUser(APIView):
@@ -169,7 +182,7 @@ class KakaoLogIn(APIView):
                 data={
                     "grant_type": "authorization_code",
                     "client_id": "3578cdbb0e21d6feabaa9d424e7d14e5",
-                    "redirect_uri": "http://127.0.0.1:3000/social/kakao",
+                    "redirect_uri": f"{FRONTEND_HOST}/social/kakao",
                     "code": code,
                 },
             )
