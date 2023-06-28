@@ -45,6 +45,9 @@ class RoomAdmin(admin.ModelAdmin):
 class AmenityAdmin(admin.ModelAdmin):
     list_display = (
         "name",
+        "kind",
+        "description",
+        "icon_image",
         "created_at",
         "updated_at",
     )

@@ -15,6 +15,9 @@ class AmenitySerializer(ModelSerializer):
         fields = (
             "name",
             "description",
+            "kind",
+            "icon_image",
+            "pk",
         )
 
 
@@ -81,11 +84,13 @@ class RoomDetailSerializer(ModelSerializer):
 
     def get_is_owner(self, room):
         request = self.context["request"]
-        return room.owner == request.user
+        if request:
+            return room.owner == request.user
+        return False
 
     def get_is_liked(self, room):
         request = self.context["request"]
-        if request.user.is_authenticated:
+        if request and request.user.is_authenticated:
             return Wishlist.objects.filter(
                 user=request.user,
                 rooms__pk=room.pk,
