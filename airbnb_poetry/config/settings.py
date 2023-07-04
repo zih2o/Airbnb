@@ -176,4 +176,10 @@ CSRF_TRUSTED_ORIGINS = [
     env("FRONTEND_HOST"),
 ]
 
+# Secret Key
+
 GH_SECRET = env("GH_SECRET")
+CF_ID = env("CF_ID")
+
+# Host
+FRONTEND_HOST = env("FRONTEND_HOST")
