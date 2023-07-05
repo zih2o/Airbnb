@@ -271,7 +271,7 @@ class RoomPhotos(APIView):
             photo = serializer.save(room=room)
             return Response(PhotoSerializer(photo).data)
         else:
-            return Response(serializer.errors)
+            return Response(serializer.errors, status=HTTP_400_BAD_REQUEST)
 
 
 class RoomBookings(APIView):

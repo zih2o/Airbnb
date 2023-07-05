@@ -7,7 +7,7 @@ class Photo(CommonModel):
     """Photo for an experience or a room"""
 
     file = models.URLField()
-    description = models.CharField(max_length=140)
+    description = models.CharField(max_length=140, blank=True)
     room = models.ForeignKey(
         "rooms.Room",
         null=True,
