@@ -338,6 +338,6 @@ class RoomBookingCheck(APIView):
             check_out__gte=check_in,
         ).exists()
         if exists:
-            return Response({"ok": False})
+            return Response({"ok": False, "check_in": check_in, "check_out": check_out})
         else:
-            return Response({"ok": True})
+            return Response({"ok": True, "check_in": check_in, "check_out": check_out})
