@@ -84,13 +84,29 @@ class Rooms(APIView):
     permission_classes = [IsAuthenticatedOrReadOnly]
 
     def get(self, request):
-        all_room = Room.objects.all()
+        try:
+            page = request.query_params.get("page", 1)
+            page = int(page)
+            per_page = request.query_params.get("perPage", 8)
+            per_page = int(per_page)
+        except ValueError:
+            page = 1
+            per_page = 8
+
+        start = (page - 1) * per_page
+        end = start + per_page
+        total_page = len(Room.objects.all()) // per_page + 1
         serializer = RoomListSerializer(
-            all_room,
+            Room.objects.all()[start:end],
             many=True,
             context={"request": request},
         )
-        return Response(serializer.data)
+        return Response(
+            {
+                "rooms": serializer.data,
+                "totalPage": total_page,
+            }
+        )
 
     def post(self, request):
         serializer = RoomDetailSerializer(data=request.data)
@@ -211,18 +227,28 @@ class RoomReviews(APIView):
         try:
             page = request.query_params.get("page", 1)
             page = int(page)
+            per_page = request.query_params.get("perPage", 5)
+            per_page = int(per_page)
         except ValueError:
             page = 1
+            per_page = 5
 
         room = self.get_object(pk)
-        page_size = settings.PAGE_SIZE
-        start = (page - 1) * page_size
-        end = start + page_size
+        start = (page - 1) * per_page
+        end = start + per_page
+        total_review = len(room.reviews.all())
+        total_page = len(room.reviews.all()) // per_page + 1
         serializer = ReviewSerializer(
             room.reviews.all()[start:end],
             many=True,
         )
-        return Response(serializer.data)
+        return Response(
+            {
+                "reviews": serializer.data,
+                "totalReview": total_review,
+                "totalPage": total_page,
+            }
+        )
 
     def post(self, request, pk):
         serializer = ReviewSerializer(data=request.data)

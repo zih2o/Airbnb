@@ -22,6 +22,7 @@ class AmenitySerializer(ModelSerializer):
 
 
 class RoomListSerializer(ModelSerializer):
+    owner = TinyUserSerializer(read_only=True)
     photos = PhotoSerializer(
         many=True,
         read_only=True,

@@ -60,7 +60,7 @@ class Room(CommonModel):
         total = 0
         for rating in self.reviews.all().values("rating"):
             total += rating["rating"]
-        return round(total / count, 2)
+        return round(total / count, 1)
 
 
 class Amenity(CommonModel):
