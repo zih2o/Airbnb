@@ -33,14 +33,10 @@
 </div>
 
 ## 3. ARCHITECTURE
-
-- 서비스 구조도 그림 <img src="./stack.png">
-- ERD <br><img src="./DoGreen ERD.png">
-- 와이어프레임  
-  <t> <img src="https://img.shields.io/badge/figma-F24E1E?style=for-the-badge&logo=figma&logoColor=white">  
-  <t>https://www.figma.com/file/tXtlbgXtKAsmPOo2scuaUn/team2-team-library?node-id=0%3A1&t=gwOCbP2MqN0caJlU-1
-
-- API 명세 https://www.notion.so/b607690ea13744f3bc04a890a50a49ba?p=1a8eaa08dcc142d18cecd0b1b7387680&pm=s
+<div align="center">
+  
+<img  width="700" src="https://github.com/nomadcoders/airbnb-clone-frontend/assets/85221728/4ff7787e-0b9e-4718-a812-4465deb7bf37">
+</div>
 
 
 ## 3. SERVICE SCREEN
